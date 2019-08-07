@@ -238,12 +238,10 @@ const boardTaskContainer = document.createElement(`div`);
 boardTaskContainer.classList.add(`board__tasks`);
 const Main = document.querySelector(`.main`);
 const mainControl = document.querySelector(`.main__control`);
-const insertMarkup = (markupContainer, markup, quantity = 1) => {
-  for (let i = 1; i <= quantity; i++) {
-    markupContainer.appendChild(markup);
-  }
-  return markupContainer;
+const insertMarkup = (markupContainer, markup) => {
+  markupContainer.appendChild(markup);
 };
+const numberOfRepetitionsCards = 3;
 
 insertMarkup(mainControl, componentMenu());
 insertMarkup(Main, componentSearch());
@@ -252,5 +250,7 @@ insertMarkup(Main, boardContainer);
 insertMarkup(boardContainer, componentBoardFilter());
 insertMarkup(boardContainer, boardTaskContainer);
 insertMarkup(boardTaskContainer, componentCardEdit());
-insertMarkup(boardTaskContainer, componentCard(), 3);
+new Array(numberOfRepetitionsCards).fill(componentCard()).forEach(() => {
+  insertMarkup(boardTaskContainer, componentCard());
+});
 insertMarkup(boardContainer, componentLoadMoreButton());
