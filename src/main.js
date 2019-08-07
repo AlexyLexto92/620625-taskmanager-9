@@ -1,6 +1,7 @@
+'use strict';
 const componentMenu = () => {
   const sectionMenuWrap = document.createElement(`section`);
-  sectionMenuWrap.classList.add('control__btn-wrap');
+  sectionMenuWrap.classList.add(`control__btn-wrap`);
   sectionMenuWrap.innerHTML = `
           <input type="radio" name="control" id="control__new-task" class="control__input visually-hidden">
           <label for="control__new-task" class="control__label control__label--new-task"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">+ ДОБАВИТЬ НОВУЮ ЗАДАЧУ</font></font></label>
@@ -8,21 +9,21 @@ const componentMenu = () => {
           <label for="control__task" class="control__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">ЗАДАЧИ</font></font></label>
           <input type="radio" name="control" id="control__statistic" class="control__input visually-hidden">
           <label for="control__statistic" class="control__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">СТАТИСТИКА</font></font></label>
-`
+`;
   return sectionMenuWrap;
 };
 const componentSearch = () => {
   const sectionSearchWrap = document.createElement(`section`);
-  sectionSearchWrap.classList.add('main__search', 'search', 'container');
+  sectionSearchWrap.classList.add(`main__search`, `search`, `container`);
   sectionSearchWrap.innerHTML = `
         <input type="text" id="search__input" class="search__input" placeholder="START TYPING — SEARCH BY WORD, #HASHTAG OR DATE">
-        <label class="visually-hidden" for="search__input"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Поиск</font></font></label>`
-  return sectionSearchWrap
+        <label class="visually-hidden" for="search__input"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Поиск</font></font></label>`;
+  return sectionSearchWrap;
 };
 
 const componentFilter = () => {
   const sectionFilterWrap = document.createElement(`section`);
-  sectionFilterWrap.classList.add('main__filter', 'filter', 'container');
+  sectionFilterWrap.classList.add(`main__filter`, `filter`, `container`);
   sectionFilterWrap.innerHTML = `
         <input type="radio" id="filter__all" class="filter__input visually-hidden" name="filter" checked="">
         <label for="filter__all" class="filter__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
@@ -39,23 +40,23 @@ const componentFilter = () => {
         <label for="filter__tags" class="filter__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Теги </font></font><span class="filter__tags-count"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">0</font></font></span></label>
         <input type="radio" id="filter__archive" class="filter__input visually-hidden" name="filter">
         <label for="filter__archive" class="filter__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Архив </font></font><span class="filter__archive-count"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">115</font></font></span></label>
-`
-  return sectionFilterWrap
+`;
+  return sectionFilterWrap;
 };
 
 const componentBoardFilter = () => {
   const sectionBoardFilterWrap = document.createElement(`div`);
-  sectionBoardFilterWrap.classList.add('board__filter-list');
+  sectionBoardFilterWrap.classList.add(`board__filter-list`);
   sectionBoardFilterWrap.innerHTML = `
           <a href="#" class="board__filter"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Сортировка по умолчанию </font></font></a>
           <a href="#" class="board__filter"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Сортировка по дате вверх </font></font></a>
           <a href="#" class="board__filter"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Сортировка по дате вниз</font></font></a>
-  `
-  return sectionBoardFilterWrap
+  `;
+  return sectionBoardFilterWrap;
 };
 const componentCard = () => {
   const sectionCardWrap = document.createElement(`article`);
-  sectionCardWrap.classList.add('card', 'card--black');
+  sectionCardWrap.classList.add(`card`, `card--black`);
   sectionCardWrap.innerHTML = `
             <div class="card__form">
               <div class="card__inner">
@@ -117,12 +118,12 @@ const componentCard = () => {
                 </div>
               </div>
             </div>
-`
-  return sectionCardWrap
+`;
+  return sectionCardWrap;
 };
 const componentCardEdit = () => {
   const sectionCardEditWrap = document.createElement(`article`);
-  sectionCardEditWrap.classList.add('card', 'card--edit', 'card--black');
+  sectionCardEditWrap.classList.add(`card`, `card--edit`, `card--black`);
   sectionCardEditWrap.innerHTML = `
 
             <form class="card__form" method="get">
@@ -218,33 +219,29 @@ const componentCardEdit = () => {
               </div>
             </form>
 
-`
-  return sectionCardEditWrap
+`;
+  return sectionCardEditWrap;
 };
 
 const componentLoadMoreButton = () => {
   const buttonMore = document.createElement(`button`);
-  buttonMore.classList.add('load-more');
-  buttonMore.type = 'button';
+  buttonMore.classList.add(`load-more`);
+  buttonMore.type = `button`;
   buttonMore.innerHTML = `
 <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Загрузи больше</font></font>
-`
-  return buttonMore
+`;
+  return buttonMore;
 };
-const boardContainer = document.createElement('section');
-boardContainer.classList.add('board', 'container');
-const boardTaskContainer = document.createElement('div');
-boardTaskContainer.classList.add('board__tasks');
-const Main = document.querySelector('.main');
-const mainControl = document.querySelector('.main__control');
+const boardContainer = document.createElement(`section`);
+boardContainer.classList.add(`board`, `container`);
+const boardTaskContainer = document.createElement(`div`);
+boardTaskContainer.classList.add(`board__tasks`);
+const Main = document.querySelector(`.main`);
+const mainControl = document.querySelector(`.main__control`);
 const insertMarkup = (markupContainer, markup, quantity = 1) => {
-  if (quantity > 1) {
-    for (let i = 0; i < quantity; i++) {
-      markupContainer.appendChild(markup);
-    }
-  } else {
-    markupContainer.appendChild(markup)
-  };
+  for (let i = 1; i <= quantity; i++) {
+    markupContainer.appendChild(markup);
+  }
   return markupContainer;
 };
 
@@ -253,7 +250,7 @@ insertMarkup(Main, componentSearch());
 insertMarkup(Main, componentFilter());
 insertMarkup(Main, boardContainer);
 insertMarkup(boardContainer, componentBoardFilter());
-insertMarkup(boardContainer, boardTaskContainer)
+insertMarkup(boardContainer, boardTaskContainer);
 insertMarkup(boardTaskContainer, componentCardEdit());
 insertMarkup(boardTaskContainer, componentCard(), 3);
 insertMarkup(boardContainer, componentLoadMoreButton());
