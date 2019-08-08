@@ -1,6 +1,5 @@
 'use strict';
-const getComponentMenu = () => {
-  return `
+const getComponentMenu = () => (`
 <section class="control__btn-wrap">
 <input type="radio" name="control" id="control__new-task" class="control__input visually-hidden">
 <label for="control__new-task" class="control__label control__label--new-task"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">+ ДОБАВИТЬ НОВУЮ ЗАДАЧУ</font></font></label>
@@ -9,20 +8,16 @@ const getComponentMenu = () => {
 <input type="radio" name="control" id="control__statistic" class="control__input visually-hidden">
 <label for="control__statistic" class="control__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">СТАТИСТИКА</font></font></label>
 </section>
-`;
-};
+`);
 
-const getComponentSearch = () => {
-  return `
+const getComponentSearch = () => (`
 <section class="main__search search container">
         <input type="text" id="search__input" class="search__input" placeholder="START TYPING — SEARCH BY WORD, #HASHTAG OR DATE">
         <label class="visually-hidden" for="search__input"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Поиск</font></font></label>
       </section>
-      `;
-};
+      `);
 
-const getComponentFilter = () => {
-  return `
+const getComponentFilter = () => (`
 <section class="main__filter filter container">
         <input type="radio" id="filter__all" class="filter__input visually-hidden" name="filter" checked="">
         <label for="filter__all" class="filter__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
@@ -40,19 +35,18 @@ const getComponentFilter = () => {
         <input type="radio" id="filter__archive" class="filter__input visually-hidden" name="filter">
         <label for="filter__archive" class="filter__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Архив </font></font><span class="filter__archive-count"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">115</font></font></span></label>
       </section>
-      `;
-};
+      `);
 
-const getComponentBoardFilter = () => {
-  return `<div class="board__filter-list">
+const getComponentBoardFilter = () => (
+  `<div class="board__filter-list">
   <a href="#" class="board__filter"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Сортировка по умолчанию </font></font></a>
   <a href="#" class="board__filter"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Сортировка по дате вверх </font></font></a>
   <a href="#" class="board__filter"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Сортировка по дате вниз</font></font></a>
 </div>
-`;
-};
-const getComponentCard = () => {
-  return `
+`
+);
+const getComponentCard = () => (
+  `
   <article class="card card--black">
             <div class="card__form">
               <div class="card__inner">
@@ -115,10 +109,9 @@ const getComponentCard = () => {
               </div>
             </div>
           </article>
-          `;
-};
-const getComponentCardEdit = () => {
-  return `
+          `
+);
+const getComponentCardEdit = () => (`
 <article class="card card--edit card--black">
             <form class="card__form" method="get">
               <div class="card__inner">
@@ -213,14 +206,13 @@ const getComponentCardEdit = () => {
               </div>
             </form>
           </article>
-          `;
-};
+          `);
 
-const getComponentLoadMoreButton = () => {
-  return `
+const getComponentLoadMoreButton = () => (
+  `
 <button class="load-more" type="button"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Загрузи больше</font></font></button>
-`;
-};
+  `
+);
 const Main = document.querySelector(`.main`);
 const boardContainer = document.createElement(`section`);
 boardContainer.classList.add(`board`, `container`);
