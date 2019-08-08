@@ -1,33 +1,32 @@
 'use strict';
 const getComponentMenu = () => {
-  const sectionMenuWrap = document.createElement(`section`);
-  sectionMenuWrap.classList.add(`control__btn-wrap`);
-  sectionMenuWrap.innerHTML = `
-          <input type="radio" name="control" id="control__new-task" class="control__input visually-hidden">
-          <label for="control__new-task" class="control__label control__label--new-task"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">+ ДОБАВИТЬ НОВУЮ ЗАДАЧУ</font></font></label>
-          <input type="radio" name="control" id="control__task" class="control__input visually-hidden" checked="">
-          <label for="control__task" class="control__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">ЗАДАЧИ</font></font></label>
-          <input type="radio" name="control" id="control__statistic" class="control__input visually-hidden">
-          <label for="control__statistic" class="control__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">СТАТИСТИКА</font></font></label>
+  return `
+<section class="control__btn-wrap">
+<input type="radio" name="control" id="control__new-task" class="control__input visually-hidden">
+<label for="control__new-task" class="control__label control__label--new-task"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">+ ДОБАВИТЬ НОВУЮ ЗАДАЧУ</font></font></label>
+<input type="radio" name="control" id="control__task" class="control__input visually-hidden" checked="">
+<label for="control__task" class="control__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">ЗАДАЧИ</font></font></label>
+<input type="radio" name="control" id="control__statistic" class="control__input visually-hidden">
+<label for="control__statistic" class="control__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">СТАТИСТИКА</font></font></label>
+</section>
 `;
-  return sectionMenuWrap;
 };
+
 const getComponentSearch = () => {
-  const sectionSearchWrap = document.createElement(`section`);
-  sectionSearchWrap.classList.add(`main__search`, `search`, `container`);
-  sectionSearchWrap.innerHTML = `
+  return `
+<section class="main__search search container">
         <input type="text" id="search__input" class="search__input" placeholder="START TYPING — SEARCH BY WORD, #HASHTAG OR DATE">
-        <label class="visually-hidden" for="search__input"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Поиск</font></font></label>`;
-  return sectionSearchWrap;
+        <label class="visually-hidden" for="search__input"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Поиск</font></font></label>
+      </section>
+      `;
 };
 
 const getComponentFilter = () => {
-  const sectionFilterWrap = document.createElement(`section`);
-  sectionFilterWrap.classList.add(`main__filter`, `filter`, `container`);
-  sectionFilterWrap.innerHTML = `
+  return `
+<section class="main__filter filter container">
         <input type="radio" id="filter__all" class="filter__input visually-hidden" name="filter" checked="">
         <label for="filter__all" class="filter__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-          Все </font></font><span class="filter__all-count"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1</font></font></span></label>
+          Все </font></font><span class="filter__all-count"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2</font></font></span></label>
         <input type="radio" id="filter__overdue" class="filter__input visually-hidden" name="filter" disabled="">
         <label for="filter__overdue" class="filter__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Просрочено </font></font><span class="filter__overdue-count"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">0</font></font></span></label>
         <input type="radio" id="filter__today" class="filter__input visually-hidden" name="filter" disabled="">
@@ -40,36 +39,33 @@ const getComponentFilter = () => {
         <label for="filter__tags" class="filter__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Теги </font></font><span class="filter__tags-count"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">0</font></font></span></label>
         <input type="radio" id="filter__archive" class="filter__input visually-hidden" name="filter">
         <label for="filter__archive" class="filter__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Архив </font></font><span class="filter__archive-count"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">115</font></font></span></label>
-`;
-  return sectionFilterWrap;
+      </section>
+      `;
 };
 
 const getComponentBoardFilter = () => {
-  const sectionBoardFilterWrap = document.createElement(`div`);
-  sectionBoardFilterWrap.classList.add(`board__filter-list`);
-  sectionBoardFilterWrap.innerHTML = `
-          <a href="#" class="board__filter"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Сортировка по умолчанию </font></font></a>
-          <a href="#" class="board__filter"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Сортировка по дате вверх </font></font></a>
-          <a href="#" class="board__filter"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Сортировка по дате вниз</font></font></a>
-  `;
-  return sectionBoardFilterWrap;
+  return `<div class="board__filter-list">
+  <a href="#" class="board__filter"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Сортировка по умолчанию </font></font></a>
+  <a href="#" class="board__filter"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Сортировка по дате вверх </font></font></a>
+  <a href="#" class="board__filter"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Сортировка по дате вниз</font></font></a>
+</div>
+`;
 };
 const getComponentCard = () => {
-  const sectionCardWrap = document.createElement(`article`);
-  sectionCardWrap.classList.add(`card`, `card--black`);
-  sectionCardWrap.innerHTML = `
+  return `
+  <article class="card card--black">
             <div class="card__form">
               <div class="card__inner">
                 <div class="card__control">
-                  <button type="button" class="card__btn card__btn--edit">
-                    edit
-                  </button>
-                  <button type="button" class="card__btn card__btn--archive">
-                    archive
-                  </button>
-                  <button type="button" class="card__btn card__btn--favorites card__btn--disabled">
-                    favorites
-                  </button>
+                  <button type="button" class="card__btn card__btn--edit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                    редактировать
+                  </font></font></button>
+                  <button type="button" class="card__btn card__btn--archive"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                    архив
+                  </font></font></button>
+                  <button type="button" class="card__btn card__btn--favorites card__btn--disabled"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                    избранное
+                  </font></font></button>
                 </div>
 
                 <div class="card__color-bar">
@@ -79,7 +75,7 @@ const getComponentCard = () => {
                 </div>
 
                 <div class="card__textarea-wrap">
-                  <p class="card__text">Example default task with default color.</p>
+                  <p class="card__text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Пример задания по умолчанию с цветом по умолчанию.</font></font></p>
                 </div>
 
                 <div class="card__settings">
@@ -87,8 +83,8 @@ const getComponentCard = () => {
                     <div class="card__dates">
                       <div class="card__date-deadline">
                         <p class="card__input-deadline-wrap">
-                          <span class="card__date">23 September</span>
-                          <span class="card__time">11:15 PM</span>
+                          <span class="card__date"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">23 сентября </font></font></span>
+                          <span class="card__time"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">23:15</font></font></span>
                         </p>
                       </div>
                     </div>
@@ -96,21 +92,21 @@ const getComponentCard = () => {
                     <div class="card__hashtag">
                       <div class="card__hashtag-list">
                         <span class="card__hashtag-inner">
-                          <span class="card__hashtag-name">
+                          <span class="card__hashtag-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
                             #todo
-                          </span>
+                           </font></font></span>
                         </span>
 
-                        <span class="card__hashtag-inner">
-                          <span class="card__hashtag-name">
+                        <font style="vertical-align: inherit;"><span class="card__hashtag-inner"><span class="card__hashtag-name"><font style="vertical-align: inherit;">
                             #personal
-                          </span>
+                           </font></span></span><span class="card__hashtag-inner"><span class="card__hashtag-name"><font style="vertical-align: inherit;">
+                            #important
+                          </font></span></span></font><span class="card__hashtag-inner">
+                          <span class="card__hashtag-name"><font style="vertical-align: inherit;"></font></span>
                         </span>
 
                         <span class="card__hashtag-inner">
-                          <span class="card__hashtag-name">
-                            #important
-                          </span>
+                          <span class="card__hashtag-name"><font style="vertical-align: inherit;"></font></span>
                         </span>
                       </div>
                     </div>
@@ -118,14 +114,12 @@ const getComponentCard = () => {
                 </div>
               </div>
             </div>
-`;
-  return sectionCardWrap;
+          </article>
+          `;
 };
 const getComponentCardEdit = () => {
-  const sectionCardEditWrap = document.createElement(`article`);
-  sectionCardEditWrap.classList.add(`card`, `card--edit`, `card--black`);
-  sectionCardEditWrap.innerHTML = `
-
+  return `
+<article class="card card--edit card--black">
             <form class="card__form" method="get">
               <div class="card__inner">
                 <div class="card__control">
@@ -218,39 +212,34 @@ const getComponentCardEdit = () => {
                 </div>
               </div>
             </form>
-
-`;
-  return sectionCardEditWrap;
+          </article>
+          `;
 };
 
 const getComponentLoadMoreButton = () => {
-  const buttonMore = document.createElement(`button`);
-  buttonMore.classList.add(`load-more`);
-  buttonMore.type = `button`;
-  buttonMore.innerHTML = `
-<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Загрузи больше</font></font>
+  return `
+<button class="load-more" type="button"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Загрузи больше</font></font></button>
 `;
-  return buttonMore;
 };
+const Main = document.querySelector(`.main`);
 const boardContainer = document.createElement(`section`);
 boardContainer.classList.add(`board`, `container`);
 const boardTaskContainer = document.createElement(`div`);
 boardTaskContainer.classList.add(`board__tasks`);
-const Main = document.querySelector(`.main`);
 const mainControl = document.querySelector(`.main__control`);
-const insertMarkup = (markupContainer, markup) => {
-  markupContainer.appendChild(markup);
+const insertMarkup = (markupContainer, markup, position) => {
+  markupContainer.insertAdjacentHTML(position, markup);
 };
 const numberOfRepetitionsCards = 3;
 
-insertMarkup(mainControl, getComponentMenu());
-insertMarkup(Main, getComponentSearch());
-insertMarkup(Main, getComponentFilter());
-insertMarkup(Main, boardContainer);
-insertMarkup(boardContainer, getComponentBoardFilter());
-insertMarkup(boardContainer, boardTaskContainer);
-insertMarkup(boardTaskContainer, getComponentCardEdit());
+insertMarkup(mainControl, getComponentMenu(), `beforeend`);
+insertMarkup(Main, getComponentSearch(), `beforeend`);
+insertMarkup(Main, getComponentFilter(), `beforeend`);
+Main.appendChild(boardContainer);
+insertMarkup(boardContainer, getComponentBoardFilter(), `beforeend`);
+boardContainer.appendChild(boardTaskContainer);
+insertMarkup(boardTaskContainer, getComponentCardEdit(), `beforeend`);
 new Array(numberOfRepetitionsCards).fill(getComponentCard()).forEach(() => {
-  insertMarkup(boardTaskContainer, getComponentCard());
+  insertMarkup(boardTaskContainer, getComponentCard(), `beforeend`);
 });
-insertMarkup(boardContainer, getComponentLoadMoreButton());
+insertMarkup(boardContainer, getComponentLoadMoreButton(), `beforeend`);
