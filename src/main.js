@@ -1,5 +1,5 @@
 'use strict';
-const componentMenu = () => {
+const getComponentMenu = () => {
   const sectionMenuWrap = document.createElement(`section`);
   sectionMenuWrap.classList.add(`control__btn-wrap`);
   sectionMenuWrap.innerHTML = `
@@ -12,7 +12,7 @@ const componentMenu = () => {
 `;
   return sectionMenuWrap;
 };
-const componentSearch = () => {
+const getComponentSearch = () => {
   const sectionSearchWrap = document.createElement(`section`);
   sectionSearchWrap.classList.add(`main__search`, `search`, `container`);
   sectionSearchWrap.innerHTML = `
@@ -21,7 +21,7 @@ const componentSearch = () => {
   return sectionSearchWrap;
 };
 
-const componentFilter = () => {
+const getComponentFilter = () => {
   const sectionFilterWrap = document.createElement(`section`);
   sectionFilterWrap.classList.add(`main__filter`, `filter`, `container`);
   sectionFilterWrap.innerHTML = `
@@ -44,7 +44,7 @@ const componentFilter = () => {
   return sectionFilterWrap;
 };
 
-const componentBoardFilter = () => {
+const getComponentBoardFilter = () => {
   const sectionBoardFilterWrap = document.createElement(`div`);
   sectionBoardFilterWrap.classList.add(`board__filter-list`);
   sectionBoardFilterWrap.innerHTML = `
@@ -54,7 +54,7 @@ const componentBoardFilter = () => {
   `;
   return sectionBoardFilterWrap;
 };
-const componentCard = () => {
+const getComponentCard = () => {
   const sectionCardWrap = document.createElement(`article`);
   sectionCardWrap.classList.add(`card`, `card--black`);
   sectionCardWrap.innerHTML = `
@@ -121,7 +121,7 @@ const componentCard = () => {
 `;
   return sectionCardWrap;
 };
-const componentCardEdit = () => {
+const getComponentCardEdit = () => {
   const sectionCardEditWrap = document.createElement(`article`);
   sectionCardEditWrap.classList.add(`card`, `card--edit`, `card--black`);
   sectionCardEditWrap.innerHTML = `
@@ -223,7 +223,7 @@ const componentCardEdit = () => {
   return sectionCardEditWrap;
 };
 
-const componentLoadMoreButton = () => {
+const getComponentLoadMoreButton = () => {
   const buttonMore = document.createElement(`button`);
   buttonMore.classList.add(`load-more`);
   buttonMore.type = `button`;
@@ -243,14 +243,14 @@ const insertMarkup = (markupContainer, markup) => {
 };
 const numberOfRepetitionsCards = 3;
 
-insertMarkup(mainControl, componentMenu());
-insertMarkup(Main, componentSearch());
-insertMarkup(Main, componentFilter());
+insertMarkup(mainControl, getComponentMenu());
+insertMarkup(Main, getComponentSearch());
+insertMarkup(Main, getComponentFilter());
 insertMarkup(Main, boardContainer);
-insertMarkup(boardContainer, componentBoardFilter());
+insertMarkup(boardContainer, getComponentBoardFilter());
 insertMarkup(boardContainer, boardTaskContainer);
-insertMarkup(boardTaskContainer, componentCardEdit());
-new Array(numberOfRepetitionsCards).fill(componentCard()).forEach(() => {
-  insertMarkup(boardTaskContainer, componentCard());
+insertMarkup(boardTaskContainer, getComponentCardEdit());
+new Array(numberOfRepetitionsCards).fill(getComponentCard()).forEach(() => {
+  insertMarkup(boardTaskContainer, getComponentCard());
 });
-insertMarkup(boardContainer, componentLoadMoreButton());
+insertMarkup(boardContainer, getComponentLoadMoreButton());
