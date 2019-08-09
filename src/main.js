@@ -1,4 +1,4 @@
-'use strict';
+/*
 const getComponentMenu = () => (`
 <section class="control__btn-wrap">
 <input type="radio" name="control" id="control__new-task" class="control__input visually-hidden">
@@ -9,14 +9,16 @@ const getComponentMenu = () => (`
 <label for="control__statistic" class="control__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">СТАТИСТИКА</font></font></label>
 </section>
 `);
-
+*/
+/*
 const getComponentSearch = () => (`
 <section class="main__search search container">
         <input type="text" id="search__input" class="search__input" placeholder="START TYPING — SEARCH BY WORD, #HASHTAG OR DATE">
         <label class="visually-hidden" for="search__input"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Поиск</font></font></label>
       </section>
       `);
-
+*/
+/*
 const getComponentFilter = () => (`
 <section class="main__filter filter container">
         <input type="radio" id="filter__all" class="filter__input visually-hidden" name="filter" checked="">
@@ -36,7 +38,8 @@ const getComponentFilter = () => (`
         <label for="filter__archive" class="filter__label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Архив </font></font><span class="filter__archive-count"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">115</font></font></span></label>
       </section>
       `);
-
+      */
+/*
 const getComponentBoardFilter = () => (
   `<div class="board__filter-list">
   <a href="#" class="board__filter"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Сортировка по умолчанию </font></font></a>
@@ -45,6 +48,8 @@ const getComponentBoardFilter = () => (
 </div>
 `
 );
+*/
+/*
 const getComponentCard = () => (
   `
   <article class="card card--black">
@@ -111,6 +116,8 @@ const getComponentCard = () => (
           </article>
           `
 );
+*/
+/*
 const getComponentCardEdit = () => (`
 <article class="card card--edit card--black">
             <form class="card__form" method="get">
@@ -207,12 +214,37 @@ const getComponentCardEdit = () => (`
             </form>
           </article>
           `);
-
+*/
+/*
 const getComponentLoadMoreButton = () => (
   `
 <button class="load-more" type="button"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Загрузи больше</font></font></button>
   `
 );
+*/
+import {
+  getComponentMenu
+} from './components/menu.js';
+import {
+  getComponentFilter
+} from './components/filter.js';
+import {
+  getComponentSearch
+} from './components/search.js';
+import {
+  getComponentBoardFilter
+} from './components/boardFilter.js';
+import {
+  getComponentCard
+} from './components/card.js';
+import {
+  getComponentCardEdit
+} from './components/cardEdit.js';
+import {
+  getComponentLoadMoreButton
+} from './components/loadMoreButton.js';
+
+
 const Main = document.querySelector(`.main`);
 const boardContainer = document.createElement(`section`);
 boardContainer.classList.add(`board`, `container`);
