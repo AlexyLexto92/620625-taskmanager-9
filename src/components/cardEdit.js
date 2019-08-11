@@ -93,4 +93,4 @@ export const getComponentCardEdit = () => (`
       </div>
     </form>
   </article>
-          `);
+  `);
