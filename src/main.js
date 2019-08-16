@@ -1,4 +1,5 @@
-import {card} from './components/data.js';
+import {Cards} from './components/data.js';
+import {filters} from './components/data.js';
 import {getComponentMenu} from './components/menu.js';
 import {getComponentFilter} from './components/filter.js';
 import {getComponentSearch} from './components/search.js';
@@ -6,11 +7,12 @@ import {getComponentBoardFilter} from './components/boardFilter.js';
 import {getComponentCard} from './components/card.js';
 import {getComponentCardEdit} from './components/cardEdit.js';
 import {getComponentLoadMoreButton} from './components/loadMoreButton.js';
-const NUMBER_OF_REPETITIONS_CARDS = 3;
+
 
 const main = document.querySelector(`.main`);
 const mainControl = document.querySelector(`.main__control`);
-
+const filterContainer = document.createElement(`section`);
+filterContainer.classList.add(`main__filter`, `filter`, `container`);
 const insertMarkup = (markupContainer, markup, position) => {
   markupContainer.insertAdjacentHTML(position, markup);
 };
@@ -25,7 +27,11 @@ insertMarkup(mainControl, getComponentMenu(), `beforeend`);
 
 insertMarkup(main, getComponentSearch(), `beforeend`);
 
-insertMarkup(main, getComponentFilter(), `beforeend`);
+main.appendChild(filterContainer);
+
+for (let prop of filters) {
+  insertMarkup(filterContainer, getComponentFilter(prop), `beforeend`);
+}
 
 main.appendChild(boardContainer);
 
@@ -35,9 +41,8 @@ boardContainer.appendChild(boardTaskContainer);
 
 insertMarkup(boardTaskContainer, getComponentCardEdit(), `beforeend`);
 
-new Array(NUMBER_OF_REPETITIONS_CARDS).fill(getComponentCard()).forEach(() => {
+for (let card of Cards) {
   insertMarkup(boardTaskContainer, getComponentCard(card), `beforeend`);
-});
+}
 insertMarkup(boardContainer, getComponentLoadMoreButton(), `beforeend`);
-
 
