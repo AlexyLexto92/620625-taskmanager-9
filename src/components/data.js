@@ -1,6 +1,6 @@
 import {randomInteger} from './../components/utils.js';
-const NUMBER_OF_REPETITIONS_CARDS = 5;
-export const getCard = () => ({
+const NUMBER_OF_REPETITIONS_CARDS = 36;
+export const getDataCard = () => ({
   description: [
     `Изучить теорию`,
     `Сделать домашку`,
@@ -22,19 +22,19 @@ export const getCard = () => ({
   isFavorite: Boolean(randomInteger(0, 1)),
   isArchive: Boolean(randomInteger(0, 1)),
 });
+export let dataCards = new Array(NUMBER_OF_REPETITIONS_CARDS).fill(getDataCard()).map(getDataCard);
 
-export const Cards = new Array(NUMBER_OF_REPETITIONS_CARDS).fill(getCard());
 export const filters = [{
   title: ` All `,
   get count() {
-    return Cards.length;
+    return dataCards.length;
   }
 },
 {
   title: `Overdue`,
   get count() {
     let a = 0;
-    for (let elem of Cards) {
+    for (let elem of dataCards) {
       let dateNow = Date.now();
       if (elem.dueDate < dateNow) {
         a += 1;
@@ -48,7 +48,7 @@ export const filters = [{
   get count() {
     const dateNow = new Date().toDateString();
     let a = 0;
-    for (let elem of Cards) {
+    for (let elem of dataCards) {
       if (new Date(elem.dueDate).toDateString() === dateNow) {
         a += 1;
       }
@@ -60,7 +60,7 @@ export const filters = [{
   title: `Favorites`,
   get count() {
     let a = 0;
-    for (let elem of Cards) {
+    for (let elem of dataCards) {
       if (elem.isFavorite) {
         a += 1;
       }
@@ -71,14 +71,20 @@ export const filters = [{
 {
   title: `Repeating `,
   get count() {
-    return 0;
-  }
-},
+    let a = 0;
+    for (let elem of dataCards) {
+      let b = Object.values(elem.repeatingDays);
+      if (b.some((el) => el === true)) {
+        a += 1;
+      }
+    }
+    return a;
+  }},
 {
   title: `Tags`,
   get count() {
     let a = 0;
-    for (let elem of Cards) {
+    for (let elem of dataCards) {
       if (elem.tags.length > 0) {
         a += 1;
       }
@@ -90,7 +96,7 @@ export const filters = [{
   title: `Archive`,
   get count() {
     let a = 0;
-    for (let elem of Cards) {
+    for (let elem of dataCards) {
       if (elem.isArchive) {
         a += 1;
       }

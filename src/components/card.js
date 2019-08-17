@@ -28,7 +28,7 @@ export const getComponentCard = ({description, dueDate, repeatingDays, tags, col
                      <div class="card__date-deadline">
                         <p class="card__input-deadline-wrap">
                            <span class="card__date">${new Date(dueDate).toDateString()}</span>
-                           <span class="card__time">11:15 PM</span>
+                           <span class="card__time">${new Date().getHours(dueDate)}.</span>
                         </p>
                      </div>
                   </div>

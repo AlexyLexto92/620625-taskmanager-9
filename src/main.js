@@ -1,4 +1,4 @@
-import {Cards} from './components/data.js';
+import {dataCards} from './components/data.js';
 import {filters} from './components/data.js';
 import {getComponentMenu} from './components/menu.js';
 import {getComponentFilter} from './components/filter.js';
@@ -8,10 +8,14 @@ import {getComponentCard} from './components/card.js';
 import {getComponentCardEdit} from './components/cardEdit.js';
 import {getComponentLoadMoreButton} from './components/loadMoreButton.js';
 
+let start = 1;
+let end = 8;
+const stepCardLoad = 8;
 
 const main = document.querySelector(`.main`);
 const mainControl = document.querySelector(`.main__control`);
 const filterContainer = document.createElement(`section`);
+
 filterContainer.classList.add(`main__filter`, `filter`, `container`);
 const insertMarkup = (markupContainer, markup, position) => {
   markupContainer.insertAdjacentHTML(position, markup);
@@ -39,10 +43,31 @@ insertMarkup(boardContainer, getComponentBoardFilter(), `beforeend`);
 
 boardContainer.appendChild(boardTaskContainer);
 
-insertMarkup(boardTaskContainer, getComponentCardEdit(), `beforeend`);
-
+insertMarkup(boardTaskContainer, getComponentCardEdit(dataCards[0]), `beforeend`);
+let Cards = dataCards.slice(start, end);
 for (let card of Cards) {
   insertMarkup(boardTaskContainer, getComponentCard(card), `beforeend`);
 }
+
 insertMarkup(boardContainer, getComponentLoadMoreButton(), `beforeend`);
+
+const LoadButton = document.querySelector(`.load-more`);
+
+const addCards = () => {
+
+  start = 9;
+  end = start + 8;
+  start = start + stepCardLoad;
+  end = end + stepCardLoad;
+  Cards = dataCards.slice(start, end);
+  for (let card of Cards) {
+    insertMarkup(boardTaskContainer, getComponentCard(card), `beforeend`);
+  }
+  const cards = document.querySelectorAll(`.card`);
+  const cardsLength = Array.from(cards).length;
+  if (cardsLength >= dataCards.length) {
+    LoadButton.remove();
+  }
+};
+LoadButton.addEventListener(`click`, addCards);
 
