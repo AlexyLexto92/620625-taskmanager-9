@@ -63,36 +63,16 @@ export const getComponentCardEdit = ({color, description, repeatingDays, dueDate
             </div>
             <div class="card__hashtag">
                <div class="card__hashtag-list">
-                  <span class="card__hashtag-inner">
+               ${Array.from(tags).map((tag) =>`<span class="card__hashtag-inner">
                      <input type="hidden" name="hashtag" value="repeat" class="card__hashtag-hidden-input">
                      <p class="card__hashtag-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                        #${tags[0]}
+                        #${tag}
                         </font></font>
                      </p>
                      <button type="button" class="card__hashtag-delete"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
                      удалять
                      </font></font></button>
-                  </span>
-                  <span class="card__hashtag-inner">
-                     <input type="hidden" name="hashtag" value="repeat" class="card__hashtag-hidden-input">
-                     <p class="card__hashtag-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                        #${tags[1]}
-                        </font></font>
-                     </p>
-                     <button type="button" class="card__hashtag-delete"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                     удалять
-                     </font></font></button>
-                  </span>
-                  <span class="card__hashtag-inner">
-                     <input type="hidden" name="hashtag" value="repeat" class="card__hashtag-hidden-input">
-                     <p class="card__hashtag-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                        #${tags[2]}
-                        </font></font>
-                     </p>
-                     <button type="button" class="card__hashtag-delete"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                     удалять
-                     </font></font></button>
-                  </span>
+                  </span>`).join(``)}
                </div>
                <label>
                <input type="text" class="card__hashtag-input" name="hashtag-input" placeholder="Type new hashtag here">
