@@ -51,12 +51,12 @@ for (let card of Cards) {
 
 insertMarkup(boardContainer, getComponentLoadMoreButton(), `beforeend`);
 
-const LoadButton = document.querySelector(`.load-more`);
+const loadButton = document.querySelector(`.load-more`);
 
 const addCards = () => {
 
   start = 9;
-  end = start + 8;
+  end = start + stepCardLoad;
   start = start + stepCardLoad;
   end = end + stepCardLoad;
   Cards = dataCards.slice(start, end);
@@ -66,8 +66,8 @@ const addCards = () => {
   const cards = document.querySelectorAll(`.card`);
   const cardsLength = Array.from(cards).length;
   if (cardsLength >= dataCards.length) {
-    LoadButton.remove();
+    loadButton.remove();
   }
 };
-LoadButton.addEventListener(`click`, addCards);
+loadButton.addEventListener(`click`, addCards);
 

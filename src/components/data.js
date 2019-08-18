@@ -1,5 +1,14 @@
 import {randomInteger} from './../components/utils.js';
 const NUMBER_OF_REPETITIONS_CARDS = 36;
+const tagArray = [`homework`, `theory`, `practice`, `intensive`, `keks`];
+const tagsStart = 0;
+const tagsEnd = tagArray.length;
+const tagsCounts = 3;
+const tagRandom = (tagArr)=>{
+  const startCount = randomInteger(tagsStart, tagsEnd);
+  const tagsNewArray = tagArr.slice(startCount, startCount + tagsCounts);
+  return tagsNewArray;
+};
 export const getDataCard = () => ({
   description: [
     `Изучить теорию`,
@@ -17,13 +26,12 @@ export const getDataCard = () => ({
     Sa: Boolean(randomInteger(0, 1)),
     Su: Boolean(randomInteger(0, 1)),
   },
-  tags: [`homework`, `theory`, `practice`, `intensive`, `keks`].splice(randomInteger(0, 5), 3),
+  tags: tagRandom(tagArray),
   color: [`black`, `yellow`, `blue`, `green`, `pink`][Math.floor(Math.random() * 5)],
   isFavorite: Boolean(randomInteger(0, 1)),
   isArchive: Boolean(randomInteger(0, 1)),
 });
 export let dataCards = new Array(NUMBER_OF_REPETITIONS_CARDS).fill(getDataCard()).map(getDataCard);
-
 export const filters = [{
   title: ` All `,
   get count() {
