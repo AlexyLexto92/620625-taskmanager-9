@@ -54,7 +54,6 @@ insertMarkup(boardContainer, getComponentLoadMoreButton(), `beforeend`);
 const loadButton = document.querySelector(`.load-more`);
 
 const addCards = () => {
-
   start = 9;
   end = start + stepCardLoad;
   start = start + stepCardLoad;

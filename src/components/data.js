@@ -1,14 +1,8 @@
-import {randomInteger} from './../components/utils.js';
+import {randomInteger} from './utils.js';
+import {tagRandom} from './utils.js';
 const NUMBER_OF_REPETITIONS_CARDS = 36;
 const tagArray = [`homework`, `theory`, `practice`, `intensive`, `keks`];
-const tagsStart = 0;
-const tagsEnd = tagArray.length;
-const tagsCounts = 3;
-const tagRandom = (tagArr)=>{
-  const startCount = randomInteger(tagsStart, tagsEnd);
-  const tagsNewArray = tagArr.slice(startCount, startCount + tagsCounts);
-  return tagsNewArray;
-};
+
 export const getDataCard = () => ({
   description: [
     `Изучить теорию`,
@@ -26,7 +20,7 @@ export const getDataCard = () => ({
     Sa: Boolean(randomInteger(0, 1)),
     Su: Boolean(randomInteger(0, 1)),
   },
-  tags: tagRandom(tagArray),
+  tags: tagRandom(tagArray, 0, tagArray.length, 3),
   color: [`black`, `yellow`, `blue`, `green`, `pink`][Math.floor(Math.random() * 5)],
   isFavorite: Boolean(randomInteger(0, 1)),
   isArchive: Boolean(randomInteger(0, 1)),
