@@ -44,8 +44,8 @@ insertMarkup(boardContainer, getComponentBoardFilter(), `beforeend`);
 boardContainer.appendChild(boardTaskContainer);
 
 insertMarkup(boardTaskContainer, getComponentCardEdit(dataCards[0]), `beforeend`);
-let Cards = dataCards.slice(start, end);
-for (let card of Cards) {
+let sliceCards = dataCards.slice(start, end);
+for (let card of sliceCards) {
   insertMarkup(boardTaskContainer, getComponentCard(card), `beforeend`);
 }
 
@@ -58,8 +58,8 @@ const addCards = () => {
   end = start + stepCardLoad;
   start = start + stepCardLoad;
   end = end + stepCardLoad;
-  Cards = dataCards.slice(start, end);
-  for (let card of Cards) {
+  sliceCards = dataCards.slice(start, end);
+  for (let card of sliceCards) {
     insertMarkup(boardTaskContainer, getComponentCard(card), `beforeend`);
   }
   const cards = document.querySelectorAll(`.card`);
