@@ -1,6 +1,6 @@
 import {randomInteger} from './utils.js';
 import {tagRandom} from './utils.js';
-const NUMBER_OF_REPETITIONS_CARDS = 36;
+const NUMBER_OF_REPETITIONS_CARDS = 3;
 const tagsAll = [`homework`, `theory`, `practice`, `intensive`, `keks`];
 
 export const getDataCard = () => ({
