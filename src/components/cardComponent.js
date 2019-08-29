@@ -1,12 +1,13 @@
 import {createElement, unrender} from './utils.js';
 export class Card {
-  constructor({description, dueDate, tags, color, repeatingDays}) {
+  constructor({description, dueDate, tags, color, repeatingDays, id}) {
     this._description = description;
     this._dueDate = new Date(dueDate);
     this._tags = tags;
     this._color = color;
     this._element = null;
     this._repeatingDays = repeatingDays;
+    this._id = id;
   }
   getElement() {
     if (!this._element) {
@@ -16,10 +17,11 @@ export class Card {
   }
   removeElement() {
     unrender(this._element);
+    this._element = null;
+    this._id = 0;
   }
   getTemplate() {
-    return `
-     <article class="card card--${this._color} ${Object.keys(this._repeatingDays).some((day) => this._repeatingDays[day]) ? `card--repeat` : ``}">
+    return `<article data-id="${this._id}" class="card card--${this._color} ${Object.keys(this._repeatingDays).some((day) => this._repeatingDays[day]) ? `card--repeat` : ``}">
         <div class="card__form">
            <div class="card__inner">
               <div class="card__control">

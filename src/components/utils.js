@@ -14,7 +14,7 @@ export const tagRandom = (tagArr, tagsStart, tagsEnd, tagsCounts)=>{
 export const createElement = (template) => {
   const newElement = document.createElement(`div`);
   newElement.innerHTML = template;
-  return newElement.firstChild;
+  return newElement.firstElementChild;
 };
 
 // Рендер и анрендер для компонент

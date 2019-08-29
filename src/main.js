@@ -14,7 +14,7 @@ export const Position = {
   BEFOREEND: `beforeend`
 };
 
-let start = 1;
+let start = 0;
 let end = 8;
 const stepCardLoad = 8;
 
@@ -49,8 +49,9 @@ insertMarkup(boardContainer, getComponentBoardFilter(), `beforeend`);
 
 boardContainer.appendChild(boardTaskContainer);
 
-
+let date = dataCards;
 const renderCard = (data) => {
+
   const card = new Card(data);
   const cardEdit = new CardEdit(data);
 
@@ -61,8 +62,7 @@ const renderCard = (data) => {
     }
   };
 
-  card.getElement()
-  .querySelector(`.card__btn--edit`)
+  card.getElement().querySelector(`.card__btn--edit`)
     .addEventListener(`click`, () => {
       boardTaskContainer.replaceChild(cardEdit.getElement(), card.getElement());
       document.addEventListener(`keydown`, onEscKeyDown);
@@ -84,14 +84,22 @@ const renderCard = (data) => {
       document.removeEventListener(`keydown`, onEscKeyDown);
     });
 
+  cardEdit.getElement().querySelector(`.card__delete`)
+    .addEventListener(`click`, (evt) => {
+      let target = evt.target.closest(`article`);
+      const idCard = target.dataset.id;
+      card.removeElement();
+      cardEdit.removeElement();
+      date = date.filter((elem) => elem.id !== idCard);
+      return date;
+    });
   render(boardTaskContainer, card.getElement(), Position.BEFOREEND);
 };
 
+date.slice(start, end).forEach((dat) => renderCard(dat));
 
-dataCards.forEach((data) => renderCard(data));
 
 insertMarkup(boardContainer, getComponentLoadMoreButton(), `beforeend`);
-
 const loadButton = document.querySelector(`.load-more`);
 
 const addCards = () => {
@@ -99,7 +107,7 @@ const addCards = () => {
   end = start + stepCardLoad;
   start = start + stepCardLoad;
   end = end + stepCardLoad;
-
+  dataCards.slice(start, end).forEach((data) => renderCard(data));
   const cards = document.querySelectorAll(`.card`);
   const cardsLength = Array.from(cards).length;
   if (cardsLength >= dataCards.length) {
@@ -107,4 +115,3 @@ const addCards = () => {
   }
 };
 loadButton.addEventListener(`click`, addCards);
-

@@ -1,6 +1,6 @@
 import {randomInteger} from './utils.js';
 import {tagRandom} from './utils.js';
-const NUMBER_OF_REPETITIONS_CARDS = 3;
+const NUMBER_OF_REPETITIONS_CARDS = 36;
 const tagsAll = [`homework`, `theory`, `practice`, `intensive`, `keks`];
 
 export const getDataCard = () => ({
@@ -24,8 +24,10 @@ export const getDataCard = () => ({
   color: [`black`, `yellow`, `blue`, `green`, `pink`][Math.floor(Math.random() * 5)],
   isFavorite: Boolean(randomInteger(0, 1)),
   isArchive: Boolean(randomInteger(0, 1)),
+  id: Math.random(),
 });
 export let dataCards = new Array(NUMBER_OF_REPETITIONS_CARDS).fill(getDataCard()).map(getDataCard);
+
 export const filters = [{
   title: ` All `,
   get count() {
