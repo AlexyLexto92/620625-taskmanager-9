@@ -7,7 +7,8 @@ import {getComponentBoardFilter} from './components/boardFilter.js';
 import {getComponentLoadMoreButton} from './components/loadMoreButton.js';
 import {Card} from './components/cardComponent.js';
 import {CardEdit} from './components/cardEditComponent.js';
-import {render} from './components/utils.js';
+import {render, unrender} from './components/utils.js';
+import {getNoTaskElement} from './components/noTask.js';
 
 export const Position = {
   AFTERBEGIN: `afterbegin`,
@@ -49,11 +50,19 @@ insertMarkup(boardContainer, getComponentBoardFilter(), `beforeend`);
 
 boardContainer.appendChild(boardTaskContainer);
 
-let date = dataCards;
+
 const renderCard = (data) => {
 
   const card = new Card(data);
   const cardEdit = new CardEdit(data);
+
+  const delOnClick = (evt) => {
+    const target = evt.target.closest(`article`);
+    const idCard = target.dataset.id;
+    card.removeElement();
+    cardEdit.removeElement();
+    window.dat = date.filter((elem) => elem._id !== idCard);
+  };
 
   const onEscKeyDown = (evt) => {
     if (evt.key === `Escape` || evt.key === `Esc`) {
@@ -85,33 +94,33 @@ const renderCard = (data) => {
     });
 
   cardEdit.getElement().querySelector(`.card__delete`)
-    .addEventListener(`click`, (evt) => {
-      let target = evt.target.closest(`article`);
-      const idCard = target.dataset.id;
-      card.removeElement();
-      cardEdit.removeElement();
-      date = date.filter((elem) => elem.id !== idCard);
-      return date;
-    });
+    .addEventListener(`click`, delOnClick);
+
+
   render(boardTaskContainer, card.getElement(), Position.BEFOREEND);
 };
 
+const date = [];
 date.slice(start, end).forEach((dat) => renderCard(dat));
 
+if (date.length <= 0) {
+  unrender(boardTaskContainer);
+  insertMarkup(boardContainer, getNoTaskElement(), `beforeend`);
+} else {
+  insertMarkup(boardContainer, getComponentLoadMoreButton(), `beforeend`);
+  const loadButton = document.querySelector(`.load-more`);
 
-insertMarkup(boardContainer, getComponentLoadMoreButton(), `beforeend`);
-const loadButton = document.querySelector(`.load-more`);
-
-const addCards = () => {
-  start = 9;
-  end = start + stepCardLoad;
-  start = start + stepCardLoad;
-  end = end + stepCardLoad;
-  dataCards.slice(start, end).forEach((data) => renderCard(data));
-  const cards = document.querySelectorAll(`.card`);
-  const cardsLength = Array.from(cards).length;
-  if (cardsLength >= dataCards.length) {
-    loadButton.remove();
-  }
-};
-loadButton.addEventListener(`click`, addCards);
+  const addCards = () => {
+    start = 9;
+    end = start + stepCardLoad;
+    start = start + stepCardLoad;
+    end = end + stepCardLoad;
+    dataCards.slice(start, end).forEach((data) => renderCard(data));
+    const cards = document.querySelectorAll(`.card`);
+    const cardsLength = Array.from(cards).length;
+    if (cardsLength >= dataCards.length) {
+      loadButton.remove();
+    }
+  };
+  loadButton.addEventListener(`click`, addCards);
+}
