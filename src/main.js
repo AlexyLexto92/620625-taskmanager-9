@@ -4,11 +4,18 @@ import {getComponentMenu} from './components/menu.js';
 import {getComponentFilter} from './components/filter.js';
 import {getComponentSearch} from './components/search.js';
 import {getComponentBoardFilter} from './components/boardFilter.js';
-import {getComponentCard} from './components/card.js';
-import {getComponentCardEdit} from './components/cardEdit.js';
 import {getComponentLoadMoreButton} from './components/loadMoreButton.js';
+import {Card} from './components/card.js';
+import {CardEdit} from './components/cardEdit.js';
+import {render, unrender} from './components/utils.js';
+import {getNoTaskElement} from './components/noTask.js';
 
-let start = 1;
+export const Position = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`
+};
+
+let start = 0;
 let end = 8;
 const stepCardLoad = 8;
 
@@ -43,30 +50,77 @@ insertMarkup(boardContainer, getComponentBoardFilter(), `beforeend`);
 
 boardContainer.appendChild(boardTaskContainer);
 
-insertMarkup(boardTaskContainer, getComponentCardEdit(dataCards[0]), `beforeend`);
-let sliceCards = dataCards.slice(start, end);
-for (let card of sliceCards) {
-  insertMarkup(boardTaskContainer, getComponentCard(card), `beforeend`);
-}
 
-insertMarkup(boardContainer, getComponentLoadMoreButton(), `beforeend`);
+const renderCard = (data) => {
 
-const loadButton = document.querySelector(`.load-more`);
+  const card = new Card(data);
+  const cardEdit = new CardEdit(data);
 
-const addCards = () => {
-  start = 9;
-  end = start + stepCardLoad;
-  start = start + stepCardLoad;
-  end = end + stepCardLoad;
-  sliceCards = dataCards.slice(start, end);
-  for (let card of sliceCards) {
-    insertMarkup(boardTaskContainer, getComponentCard(card), `beforeend`);
-  }
-  const cards = document.querySelectorAll(`.card`);
-  const cardsLength = Array.from(cards).length;
-  if (cardsLength >= dataCards.length) {
-    loadButton.remove();
-  }
+  const delOnClick = (evt) => {
+    const target = evt.target.closest(`article`);
+    const idCard = target.dataset.id;
+    card.removeElement();
+    cardEdit.removeElement();
+    window.dat = date.filter((elem) => elem._id !== idCard);
+  };
+
+  const onEscKeyDown = (evt) => {
+    if (evt.key === `Escape` || evt.key === `Esc`) {
+      boardTaskContainer.replaceChild(card.getElement(), cardEdit.getElement());
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
+
+  card.getElement().querySelector(`.card__btn--edit`)
+    .addEventListener(`click`, () => {
+      boardTaskContainer.replaceChild(cardEdit.getElement(), card.getElement());
+      document.addEventListener(`keydown`, onEscKeyDown);
+    });
+
+  cardEdit.getElement().querySelector(`textarea`)
+    .addEventListener(`focus`, () => {
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    });
+
+  cardEdit.getElement().querySelector(`textarea`)
+    .addEventListener(`blur`, () => {
+      document.addEventListener(`keydown`, onEscKeyDown);
+    });
+
+  cardEdit.getElement().querySelector(`.card__save`)
+    .addEventListener(`click`, () => {
+      boardTaskContainer.replaceChild(card.getElement(), cardEdit.getElement());
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    });
+
+  cardEdit.getElement().querySelector(`.card__delete`)
+    .addEventListener(`click`, delOnClick);
+
+
+  render(boardTaskContainer, card.getElement(), Position.BEFOREEND);
 };
-loadButton.addEventListener(`click`, addCards);
 
+const date = dataCards;
+date.slice(start, end).forEach((dat) => renderCard(dat));
+
+if (date.length <= 0) {
+  unrender(boardTaskContainer);
+  insertMarkup(boardContainer, getNoTaskElement(), `beforeend`);
+} else {
+  insertMarkup(boardContainer, getComponentLoadMoreButton(), `beforeend`);
+  const loadButton = document.querySelector(`.load-more`);
+
+  const addCards = () => {
+    start = 9;
+    end = start + stepCardLoad;
+    start = start + stepCardLoad;
+    end = end + stepCardLoad;
+    dataCards.slice(start, end).forEach((data) => renderCard(data));
+    const cards = document.querySelectorAll(`.card`);
+    const cardsLength = Array.from(cards).length;
+    if (cardsLength >= dataCards.length) {
+      loadButton.remove();
+    }
+  };
+  loadButton.addEventListener(`click`, addCards);
+}
