@@ -6,8 +6,8 @@ export const randomInteger = (min, max) => {
 };
 export const tagRandom = (tagArr, tagsStart, tagsEnd, tagsCounts)=>{
   const startCount = randomInteger(tagsStart, tagsEnd);
-  const tagsNewArray = tagArr.slice(startCount, startCount + tagsCounts);
-  return tagsNewArray;
+  const tags = tagArr.slice(startCount, startCount + tagsCounts);
+  return tags;
 };
 
 

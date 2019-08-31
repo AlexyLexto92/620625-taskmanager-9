@@ -1,6 +1,29 @@
-export const getComponentCardEdit = ({color, description, repeatingDays, dueDate, tags}) => (`
-<article class="card card--edit card--${color} ${Object.keys(repeatingDays).some((day) => repeatingDays[day]) ? `card--repeat` : ``}">
-<form class="card__form" method="get">
+import {createElement, unrender} from './utils.js';
+export class CardEdit {
+  constructor({description, dueDate, tags, color, repeatingDays, id}) {
+    this._description = description;
+    this._dueDate = new Date(dueDate);
+    this._tags = tags;
+    this._color = color;
+    this._element = null;
+    this._repeatingDays = repeatingDays;
+    this._id = id;
+  }
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement() {
+    unrender(this._element);
+    this._element = null;
+    this._id = 0;
+  }
+
+  getTemplate() {
+    return `<article data-id="${this._id}" class="card card--edit card--${this._color} ${Object.keys(this._repeatingDays).some((day) => this._repeatingDays[day]) ? `card--repeat` : ``}">
+  <form class="card__form" method="get">
    <div class="card__inner">
       <div class="card__control">
          <button type="button" class="card__btn card__btn--archive"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
@@ -17,7 +40,7 @@ export const getComponentCardEdit = ({color, description, repeatingDays, dueDate
       </div>
       <div class="card__textarea-wrap">
          <label>
-         <textarea class="card__text" placeholder="Start typing your text here..." name="text">${description}</textarea>
+         <textarea class="card__text" placeholder="Start typing your text here..." name="text">${this._description}</textarea>
          </label>
       </div>
       <div class="card__settings">
@@ -28,42 +51,42 @@ export const getComponentCardEdit = ({color, description, repeatingDays, dueDate
                </button>
                <fieldset class="card__date-deadline">
                   <label class="card__input-deadline-wrap">
-                  <input class="card__date" type="text" placeholder="" name="date" value="${new Date(dueDate).toDateString()}">
+                  <input class="card__date" type="text" placeholder="" name="date" value="${new Date(this._dueDate).toDateString()}">
                   </label>
                </fieldset>
                <button class="card__repeat-toggle" type="button"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
                повторить: </font></font><span class="card__repeat-status"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-               ${Object.keys(repeatingDays).some((day) => repeatingDays[day]) ? `да` : `нет`}</font></font></span>
+               ${Object.keys(this._repeatingDays).some((day) => this._repeatingDays[day]) ? `да` : `нет`}</font></font></span>
                </button>
                <fieldset class="card__repeat-days">
                   <div class="card__repeat-days-inner">
                      <input class="visually-hidden card__repeat-day-input" type="checkbox" id="repeat-mo-4" name="repeat" value="mo"
-                     ${repeatingDays.Mo ? `checked=""` : `` }>
+                     ${this._repeatingDays.Mo ? `checked=""` : ``}>
                      <label class="card__repeat-day" for="repeat-mo-4"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">мо</font></font></label>
                      <input class="visually-hidden card__repeat-day-input" type="checkbox" id="repeat-tu-4" name="repeat" value="tu"
-                     ${repeatingDays.Tu ? `checked=""` : `` }>
+                     ${this._repeatingDays.Tu ? `checked=""` : ``}>
                      <label class="card__repeat-day" for="repeat-tu-4"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">вт</font></font></label>
                      <input class="visually-hidden card__repeat-day-input" type="checkbox" id="repeat-we-4" name="repeat" value="we"
-                     ${repeatingDays.We ? `checked=""` : `` }>
+                     ${this._repeatingDays.We ? `checked=""` : ``}>
                      <label class="card__repeat-day" for="repeat-we-4"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">мы</font></font></label>
                      <input class="visually-hidden card__repeat-day-input" type="checkbox" id="repeat-th-4" name="repeat" value="th"
-                     ${repeatingDays.Th ? `checked=""` : `` }>
+                     ${this._repeatingDays.Th ? `checked=""` : ``}>
                      <label class="card__repeat-day" for="repeat-th-4"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">го</font></font></label>
                      <input class="visually-hidden card__repeat-day-input" type="checkbox" id="repeat-fr-4" name="repeat" value="fr"
-                     ${repeatingDays.Fr ? `checked=""` : `` }>
+                     ${this._repeatingDays.Fr ? `checked=""` : ``}>
                      <label class="card__repeat-day" for="repeat-fr-4"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">фр</font></font></label>
                      <input class="visually-hidden card__repeat-day-input" type="checkbox" name="repeat" value="sa" id="repeat-sa-4"
-                     ${repeatingDays.Sa ? `checked=""` : `` }>
+                     ${this._repeatingDays.Sa ? `checked=""` : ``}>
                      <label class="card__repeat-day" for="repeat-sa-4"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">са</font></font></label>
                      <input class="visually-hidden card__repeat-day-input" type="checkbox" id="repeat-su-4" name="repeat" value="su"
-                     ${repeatingDays.Su ? `checked=""` : `` }>
+                     ${this._repeatingDays.Su ? `checked=""` : ``}>
                      <label class="card__repeat-day" for="repeat-su-4"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">су</font></font></label>
                   </div>
                </fieldset>
             </div>
             <div class="card__hashtag">
                <div class="card__hashtag-list">
-               ${Array.from(tags).map((tag) =>`<span class="card__hashtag-inner">
+               ${Array.from(this._tags).map((tag) => `<span class="card__hashtag-inner">
                      <input type="hidden" name="hashtag" value="repeat" class="card__hashtag-hidden-input">
                      <p class="card__hashtag-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
                         #${tag}
@@ -100,6 +123,7 @@ export const getComponentCardEdit = ({color, description, repeatingDays, dueDate
          <button class="card__delete" type="button"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">удалять</font></font></button>
       </div>
    </div>
-</form>
-</article>
-`);
+  </form>
+</article>`;
+  }
+}

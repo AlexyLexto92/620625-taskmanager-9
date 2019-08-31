@@ -5,8 +5,8 @@ import {getComponentFilter} from './components/filter.js';
 import {getComponentSearch} from './components/search.js';
 import {getComponentBoardFilter} from './components/boardFilter.js';
 import {getComponentLoadMoreButton} from './components/loadMoreButton.js';
-import {Card} from './components/cardComponent.js';
-import {CardEdit} from './components/cardEditComponent.js';
+import {Card} from './components/card.js';
+import {CardEdit} from './components/cardEdit.js';
 import {render, unrender} from './components/utils.js';
 import {getNoTaskElement} from './components/noTask.js';
 
@@ -100,7 +100,7 @@ const renderCard = (data) => {
   render(boardTaskContainer, card.getElement(), Position.BEFOREEND);
 };
 
-const date = [];
+const date = dataCards;
 date.slice(start, end).forEach((dat) => renderCard(dat));
 
 if (date.length <= 0) {
