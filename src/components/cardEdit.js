@@ -1,25 +1,15 @@
-import {createElement, unrender} from './utils.js';
-export class CardEdit {
+import {AbstractComponent} from './abstarct.js';
+export class CardEdit extends AbstractComponent {
   constructor({description, dueDate, tags, color, repeatingDays, id}) {
+    super();
     this._description = description;
     this._dueDate = new Date(dueDate);
     this._tags = tags;
     this._color = color;
-    this._element = null;
     this._repeatingDays = repeatingDays;
     this._id = id;
   }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    unrender(this._element);
-    this._element = null;
-    this._id = 0;
-  }
+
 
   getTemplate() {
     return `<article data-id="${this._id}" class="card card--edit card--${this._color} ${Object.keys(this._repeatingDays).some((day) => this._repeatingDays[day]) ? `card--repeat` : ``}">
