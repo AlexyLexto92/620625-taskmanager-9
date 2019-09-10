@@ -1,6 +1,6 @@
 import {Board} from "../components/board";
 import {TaskList} from "../components/taskList";
-import {render, Position, Key, unrender} from './../components/utils.js';
+import {render, Position, unrender} from './../components/utils.js';
 import {Card} from './../components/card';
 import {CardEdit} from './../components/cardEdit.js';
 import {MoreButton} from "../components/loadMoreButton";
@@ -43,13 +43,7 @@ export class BoardController extends AbstractComponent {
     this._filters.forEach((data) => this._renderFilter(data));
 
     this._renderButton();
-    if (dataCards.length <= 0 && this._cards.length <= 0) {
-      this._sort.removeElement();
-      this._buttonMore.removeElement();
-      this._taskList.removeElement();
-      render(this._board.getElement(), this._noElement.getElement(), Position.AFTERBEGIN);
-    }
-
+    this._renderNoTask();
     this._sort.getElement()
       .addEventListener(`click`, (evt) => this._onSortLinkClick(evt));
 
@@ -57,47 +51,48 @@ export class BoardController extends AbstractComponent {
   _renderCard(data) {
     const card = new Card(data);
     const cardEdit = new CardEdit(data);
-
+    const cardElement = card.getElement();
+    const cardEditElement = cardEdit.getElement();
     const delOnClick = () => {
       card.removeElement();
       cardEdit.removeElement();
     };
 
     const onEscKeyDown = (evt) => {
-      if (evt.key === Key.ESCAPE || evt.key === Key.ESCAPE_IE) {
-        this._taskList.getElement().replaceChild(card.getElement(), cardEdit.getElement());
+      if (evt.keyCode === 27) {
+        this._taskList.getElement().replaceChild(cardElement, cardEditElement);
         document.removeEventListener(`keydown`, onEscKeyDown);
       }
     };
 
-    card.getElement()
+    cardElement
       .querySelector(`.card__btn--edit`)
       .addEventListener(`click`, () => {
-        this._taskList.getElement().replaceChild(cardEdit.getElement(), card.getElement());
+        this._taskList.getElement().replaceChild(cardEditElement, cardElement);
         document.addEventListener(`keydown`, onEscKeyDown);
       });
 
-    cardEdit.getElement().querySelector(`textarea`)
+    cardEditElement.querySelector(`textarea`)
       .addEventListener(`focus`, () => {
         document.removeEventListener(`keydown`, onEscKeyDown);
       });
 
-    cardEdit.getElement().querySelector(`textarea`)
+    cardEditElement.querySelector(`textarea`)
       .addEventListener(`blur`, () => {
         document.addEventListener(`keydown`, onEscKeyDown);
       });
 
-    cardEdit.getElement()
+    cardEditElement
       .querySelector(`.card__save`)
       .addEventListener(`click`, () => {
-        this._taskList.getElement().replaceChild(card.getElement(), cardEdit.getElement());
+        this._taskList.getElement().replaceChild(cardElement, cardEditElement);
         document.removeEventListener(`keydown`, onEscKeyDown);
       });
 
-    cardEdit.getElement().querySelector(`.card__delete`)
+    cardEditElement.querySelector(`.card__delete`)
       .addEventListener(`click`, delOnClick);
 
-    render(this._taskList.getElement(), card.getElement(), Position.BEFOREEND);
+    render(this._taskList.getElement(), cardElement, Position.BEFOREEND);
   }
   _onSortLinkClick(evt) {
     evt.preventDefault();
@@ -142,6 +137,15 @@ export class BoardController extends AbstractComponent {
   _renderFilter(data) {
     const filter = new Filter(data);
     render(this._filterContainer.getElement(), filter.getElement(), Position.BEFOREEND);
+  }
+
+  _renderNoTask() {
+    if (dataCards.length <= 0 && this._cards.length <= 0) {
+      this._sort.removeElement();
+      this._buttonMore.removeElement();
+      this._taskList.removeElement();
+      render(this._board.getElement(), this._noElement.getElement(), Position.AFTERBEGIN);
+    }
   }
 
 }
