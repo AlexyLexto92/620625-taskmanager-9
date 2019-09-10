@@ -1,5 +1,4 @@
 
-import {Position} from './../main.js';
 export const randomInteger = (min, max) => {
   let rand = min + Math.random() * (max + 1 - min);
   return Math.floor(rand);
@@ -33,4 +32,14 @@ export const unrender = (element) => {
   if (element) {
     element.remove();
   }
+};
+
+export const KeyCode = {
+  ESK_KEY: 27,
+  ENTER_KEY: 13
+};
+
+export const Position = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`
 };
