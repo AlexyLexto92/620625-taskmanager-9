@@ -1,6 +1,6 @@
 import {Board} from "../components/board";
 import {TaskList} from "../components/taskList";
-import {render, Position, unrender} from './../components/utils.js';
+import {render, Position, unrender, KeyCode} from './../components/utils.js';
 import {Card} from './../components/card';
 import {CardEdit} from './../components/cardEdit.js';
 import {MoreButton} from "../components/loadMoreButton";
@@ -59,7 +59,7 @@ export class BoardController extends AbstractComponent {
     };
 
     const onEscKeyDown = (evt) => {
-      if (evt.keyCode === 27) {
+      if (evt.keyCode === KeyCode.ESK_KEY) {
         this._taskList.getElement().replaceChild(cardElement, cardEditElement);
         document.removeEventListener(`keydown`, onEscKeyDown);
       }

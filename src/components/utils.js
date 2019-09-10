@@ -34,10 +34,11 @@ export const unrender = (element) => {
   }
 };
 
-export const Key = {
-  ESCAPE_IE: `Escape`,
-  ESCAPE: `Esc`,
+export const KeyCode = {
+  ESK_KEY: 27,
+  ENTER_KEY: 13
 };
+
 export const Position = {
   AFTERBEGIN: `afterbegin`,
   BEFOREEND: `beforeend`
