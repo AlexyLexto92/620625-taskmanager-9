@@ -1,8 +1,6 @@
 import {Board} from "../components/board";
 import {TaskList} from "../components/taskList";
-import {render, Position, unrender, KeyCode} from './../components/utils.js';
-import {Card} from './../components/card';
-import {CardEdit} from './../components/cardEdit.js';
+import {render, Position, unrender} from './../components/utils.js';
 import {MoreButton} from "../components/loadMoreButton";
 import {NoTaskElement} from "../components/noTask";
 import {dataCards} from '../components/data.js';
@@ -12,6 +10,8 @@ import {FilterContainer} from "../components/filtercontainer";
 import {Filter} from "../components/filter";
 import {Menu} from "../components/menu";
 import {Search} from "../components/search";
+import {TaskController} from "./task";
+
 
 export class BoardController extends AbstractComponent {
   constructor(container, cards, position, filters) {
@@ -29,6 +29,11 @@ export class BoardController extends AbstractComponent {
     this._menu = new Menu();
     this._search = new Search();
 
+    this._onDataChange = this._onDataChange.bind(this);
+    this._subscriptions = [];
+    this._onChangeView = this._onChangeView.bind(this);
+
+
   }
   init() {
     unrender(document.querySelector(`.main__control`));
@@ -36,64 +41,39 @@ export class BoardController extends AbstractComponent {
     render(this._container, this._search.getElement(), Position.BEFOREEND);
     render(this._container, this._filterContainer.getElement(), Position.BEFOREEND);
     render(this._container, this._board.getElement(), Position.BEFOREEND);
-
     render(this._board.getElement(), this._sort.getElement(), Position.AFTERBEGIN);
     render(this._board.getElement(), this._taskList.getElement(), Position.BEFOREEND);
     this._cards.forEach((data) => this._renderCard(data));
     this._filters.forEach((data) => this._renderFilter(data));
-
     this._renderButton();
     this._renderNoTask();
     this._sort.getElement()
-      .addEventListener(`click`, (evt) => this._onSortLinkClick(evt));
-
+    .addEventListener(`click`, (evt) => this._onSortLinkClick(evt));
   }
-  _renderCard(data) {
-    const card = new Card(data);
-    const cardEdit = new CardEdit(data);
-    const cardElement = card.getElement();
-    const cardEditElement = cardEdit.getElement();
-    const delOnClick = () => {
-      card.removeElement();
-      cardEdit.removeElement();
-    };
 
-    const onEscKeyDown = (evt) => {
-      if (evt.keyCode === KeyCode.ESK_KEY) {
-        this._taskList.getElement().replaceChild(cardElement, cardEditElement);
-        document.removeEventListener(`keydown`, onEscKeyDown);
-      }
-    };
-
-    cardElement
-      .querySelector(`.card__btn--edit`)
-      .addEventListener(`click`, () => {
-        this._taskList.getElement().replaceChild(cardEditElement, cardElement);
-        document.addEventListener(`keydown`, onEscKeyDown);
-      });
-
-    cardEditElement.querySelector(`textarea`)
-      .addEventListener(`focus`, () => {
-        document.removeEventListener(`keydown`, onEscKeyDown);
-      });
-
-    cardEditElement.querySelector(`textarea`)
-      .addEventListener(`blur`, () => {
-        document.addEventListener(`keydown`, onEscKeyDown);
-      });
-
-    cardEditElement
-      .querySelector(`.card__save`)
-      .addEventListener(`click`, () => {
-        this._taskList.getElement().replaceChild(cardElement, cardEditElement);
-        document.removeEventListener(`keydown`, onEscKeyDown);
-      });
-
-    cardEditElement.querySelector(`.card__delete`)
-      .addEventListener(`click`, delOnClick);
-
-    render(this._taskList.getElement(), cardElement, Position.BEFOREEND);
+  _renderBoard() {
+    unrender(this._taskList.getElement());
+    this._taskList.removeElement();
+    this._buttonMore.removeElement();
+    render(this._board.getElement(), this._taskList.getElement(), Position.BEFOREEND);
+    this._cards.forEach((date) => this._renderCard(date));
+    this._renderButton();
   }
+
+
+  _renderCard(cards) {
+    const taskController = new TaskController(this._taskList, cards, this._onDataChange, this._onChangeView);
+    this._subscriptions.push(taskController.setDefaultView.bind(taskController));
+  }
+  _onDataChange(newData, oldData) {
+    this._cards[this._cards.findIndex((it) => it === oldData)] = newData;
+    this._renderBoard(this._cards);
+  }
+  _onChangeView() {
+    this._subscriptions.forEach((it) => it());
+  }
+
+
   _onSortLinkClick(evt) {
     evt.preventDefault();
     if (evt.target.tagName !== `A`) {
