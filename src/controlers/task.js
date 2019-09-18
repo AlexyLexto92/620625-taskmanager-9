@@ -1,7 +1,7 @@
 import {AbstractComponent} from "../components/abstarct";
 import {Card} from "../components/card";
 import {CardEdit} from "../components/cardEdit";
-import {render, Position, KeyCode} from './../components/utils.js';
+import {render, Position, KeyCode, unrender} from './../components/utils.js';
 import moment from 'moment';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
@@ -108,6 +108,16 @@ export class TaskController extends AbstractComponent {
 
     cardEditElement.querySelector(`.card__delete`)
       .addEventListener(`click`, delOnClick);
+
+    const delButton = cardEditElement.querySelectorAll(`.card__hashtag-delete`);
+    if (delButton) {
+      delButton.forEach((element) => {
+        element.addEventListener(`click`, (evt) => {
+          let target = evt.target.closest(`span`);
+          unrender(target);
+        });
+      });
+    }
 
     render(this._taskList.getElement(), cardElement, Position.BEFOREEND);
 

@@ -1,5 +1,6 @@
 import {AbstractComponent} from './abstarct.js';
 import moment from 'moment';
+import {KeyCode} from './utils.js';
 export class CardEdit extends AbstractComponent {
   constructor({description, dueDate, tags, color, repeatingDays, id}) {
     super();
@@ -126,10 +127,9 @@ export class CardEdit extends AbstractComponent {
 </article>`;
   }
   _subscribeOnEvents() {
-
     this.getElement()
       .querySelector(`.card__hashtag-input`).addEventListener(`keydown`, (evt) => {
-        if (evt.key === `Enter`) {
+        if (evt.keyCode === KeyCode.ENTER_KEY) {
           evt.preventDefault();
           this.getElement().querySelector(`.card__hashtag-list`).insertAdjacentHTML(`beforeend`, `<span class="card__hashtag-inner">
           <input
