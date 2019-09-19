@@ -5,20 +5,20 @@ const tagsAll = [`homework`, `theory`, `practice`, `intensive`, `keks`];
 
 export const getDataCard = () => ({
   description: [
-    `Изучить теорию`,
-    `Сделать домашку`,
-    `Пройти интенсив на соточку`
+    `Почесать кота`,
+    `Добить проект`,
+    `Не сойти с ума`
   ][Math.floor(Math.random() * 3)],
   dueDate: [Date.now() + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000,
     Date.now() - Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000][Math.floor(Math.random() * 2)],
   repeatingDays: {
-    Mo: Boolean(randomInteger(0, 1)),
-    Tu: Boolean(randomInteger(0, 1)),
-    We: Boolean(randomInteger(0, 1)),
-    Th: Boolean(randomInteger(0, 1)),
-    Fr: Boolean(randomInteger(0, 1)),
-    Sa: Boolean(randomInteger(0, 1)),
-    Su: Boolean(randomInteger(0, 1)),
+    'mo': Boolean(randomInteger(0, 1)),
+    'tu': Boolean(randomInteger(0, 1)),
+    'we': Boolean(randomInteger(0, 1)),
+    'th': Boolean(randomInteger(0, 1)),
+    'fr': Boolean(randomInteger(0, 1)),
+    'sa': Boolean(randomInteger(0, 1)),
+    'su': Boolean(randomInteger(0, 1)),
   },
   tags: tagRandom(tagsAll, 0, tagsAll.length, 3),
   color: [`black`, `yellow`, `blue`, `green`, `pink`][Math.floor(Math.random() * 5)],
