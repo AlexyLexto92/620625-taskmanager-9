@@ -1,7 +1,7 @@
 import {AbstractComponent} from "../components/abstarct";
 import {Card} from "../components/card";
 import {CardEdit} from "../components/cardEdit";
-import {render, Position, KeyCode, unrender} from './../components/utils.js';
+import {render, Position, KeyCode, unrender, Mode} from './../components/utils.js';
 import moment from 'moment';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
@@ -9,7 +9,7 @@ import 'flatpickr/dist/themes/light.css';
 
 
 export class TaskController extends AbstractComponent {
-  constructor(container, data, onDataChange, onChangeView) {
+  constructor(container, data, mode, onDataChange, onChangeView) {
     super();
     this._taskList = container;
     this._cards = data;
@@ -17,25 +17,40 @@ export class TaskController extends AbstractComponent {
     this._cardEdit = new CardEdit(data);
     this._onChangeView = onChangeView;
     this._onDataChange = onDataChange;
-    this.init();
+    this.init(mode);
   }
-  init() {
+  init(mode) {
+    let renderPosition = Position.BEFOREEND;
+    let currentView = this._card;
+
+    if (mode === Mode.ADDING) {
+      renderPosition = Position.AFTERBEGIN;
+      currentView = this._cardEdit;
+    }
     flatpickr(this._cardEdit.getElement().querySelector(`.card__date`), {
       altInput: true,
       allowInput: true,
       defaultDate: this._cards.dueDate,
     });
 
+
     const cardElement = this._card.getElement();
     const cardEditElement = this._cardEdit.getElement();
     const delOnClick = () => {
       this._card.removeElement();
       this._cardEdit.removeElement();
+      this._onDataChange(null, this._cards);
     };
 
     const onEscKeyDown = (evt) => {
       if (evt.keyCode === KeyCode.ESK_KEY) {
-        this._taskList.getElement().replaceChild(cardElement, cardEditElement);
+        if (mode === Mode.DEFAULT) {
+          if (this._taskList.getElement().contains(cardEditElement)) {
+            this._taskList.getElement().replaceChild(cardElement, cardEditElement);
+          }
+        } else if (mode === Mode.ADDING) {
+          this._taskList.getElement().removeChild(currentView.getElement());
+        }
         document.removeEventListener(`keydown`, onEscKeyDown);
       }
     };
@@ -81,7 +96,6 @@ export class TaskController extends AbstractComponent {
     cardEditElement
       .querySelector(`.card__save`)
       .addEventListener(`click`, () => {
-        this._taskList.getElement().replaceChild(cardElement, cardEditElement);
         const formData = new FormData(cardEditElement.querySelector(`.card__form`));
         const entry = {
           description: formData.get(`text`),
@@ -101,8 +115,8 @@ export class TaskController extends AbstractComponent {
             'su': false,
           })
         };
-        this._onDataChange(entry, this._cards);
-
+        this._onDataChange(entry, mode === Mode.DEFAULT ? this._card : null);
+        this._taskList.getElement().replaceChild(cardElement, cardEditElement);
         document.removeEventListener(`keydown`, onEscKeyDown);
       });
 
@@ -119,7 +133,7 @@ export class TaskController extends AbstractComponent {
       });
     }
 
-    render(this._taskList.getElement(), cardElement, Position.BEFOREEND);
+    render(this._taskList.getElement(), currentView.getElement(), renderPosition);
 
   }
   setDefaultView() {
