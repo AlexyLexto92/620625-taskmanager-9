@@ -45,7 +45,7 @@ export class CardEdit extends AbstractComponent {
                </button>
                ${this._dueDate ? `  <fieldset class="card__date-deadline">
                <label class="card__input-deadline-wrap">
-               <input class="card__date" type="text" placeholder="" name="date" value="${moment(this._dueDate).format(`dddd, MMMM Do YYYY`)}">
+               <input class="card__date" type="text" placeholder="" name="date" value=${moment(this._dueDate).format(`dddd, MMMM Do YYYY`)}>
                </label>
             </fieldset>` : ``}
                <button class="card__repeat-toggle" type="button"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">

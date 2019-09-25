@@ -96,10 +96,11 @@ export class TaskController extends AbstractComponent {
     cardEditElement
       .querySelector(`.card__save`)
       .addEventListener(`click`, () => {
+        this._taskList.getElement().replaceChild(cardElement, cardEditElement);
         const formData = new FormData(cardEditElement.querySelector(`.card__form`));
         const entry = {
           description: formData.get(`text`),
-          dueDate: new Date(formData.get(`date`)),
+          dueDate: moment(formData.get(`date`)).valueOf(),
           color: formData.get(`color`),
           tags: formData.getAll(`hashtag`),
           repeatingDays: formData.getAll(`repeat`).reduce((acc, it) => {
@@ -116,7 +117,6 @@ export class TaskController extends AbstractComponent {
           })
         };
         this._onDataChange(entry, mode === Mode.DEFAULT ? this._card : null);
-        this._taskList.getElement().replaceChild(cardElement, cardEditElement);
         document.removeEventListener(`keydown`, onEscKeyDown);
       });
 
