@@ -116,7 +116,7 @@ export class TaskController extends AbstractComponent {
             'su': false,
           })
         };
-        this._onDataChange(entry, mode === Mode.DEFAULT ? this._card : null);
+        this._onDataChange(entry, mode === Mode.DEFAULT ? this._cards : null);
         document.removeEventListener(`keydown`, onEscKeyDown);
       });
 

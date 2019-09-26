@@ -104,6 +104,7 @@ export class BoardController extends AbstractComponent {
   }
 
   _onDataChange(newData, oldData) {
+    debugger
     const index = this._cards.findIndex((it) => it === oldData);
     if (newData === null && oldData === null) {
       this._cardController = null;
@@ -116,6 +117,7 @@ export class BoardController extends AbstractComponent {
     } else {
       this._cards[index] = newData;
     }
+    console.log(this._cards);
     this._renderBoard(this._cards);
   }
 

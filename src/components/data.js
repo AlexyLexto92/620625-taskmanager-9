@@ -22,8 +22,7 @@ export const getDataCard = () => ({
   },
   tags: tagRandom(tagsAll, 0, tagsAll.length, 3),
   color: [`black`, `yellow`, `blue`, `green`, `pink`][Math.floor(Math.random() * 5)],
-  isFavorite: Boolean(randomInteger(0, 1)),
-  isArchive: Boolean(randomInteger(0, 1)),
+
   id: Math.random(),
 });
 export let dataCards = new Array(NUMBER_OF_REPETITIONS_CARDS).fill(getDataCard()).map(getDataCard);
