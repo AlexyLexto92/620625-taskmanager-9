@@ -12,6 +12,8 @@ import {Menu} from "../components/menu";
 import {Search} from "../components/search";
 import {TaskController} from "./task";
 import {Statistic} from "../components/statistic.js";
+import {SearchController} from "./searchController";
+import {ResultSearch} from "../components/resultSearch";
 
 
 export class BoardController extends AbstractComponent {
@@ -30,11 +32,13 @@ export class BoardController extends AbstractComponent {
     this._menu = new Menu();
     this._search = new Search();
     this._statistic = new Statistic();
+    this._searchBoard = new ResultSearch();
     this._cardController = null;
 
     this._onDataChange = this._onDataChange.bind(this);
     this._subscriptions = [];
     this._onChangeView = this._onChangeView.bind(this);
+    this._onSearch();
   }
 
   init() {
@@ -104,7 +108,6 @@ export class BoardController extends AbstractComponent {
   }
 
   _onDataChange(newData, oldData) {
-    debugger
     const index = this._cards.findIndex((it) => it === oldData);
     if (newData === null && oldData === null) {
       this._cardController = null;
@@ -117,7 +120,6 @@ export class BoardController extends AbstractComponent {
     } else {
       this._cards[index] = newData;
     }
-    console.log(this._cards);
     this._renderBoard(this._cards);
   }
 
@@ -125,6 +127,9 @@ export class BoardController extends AbstractComponent {
     this._subscriptions.forEach((it) => it());
   }
 
+  _onSearch() {
+    const searchController = new SearchController(this._container, this._search, this._cards, this._taskList, this._buttonMore, this._sort, this._board);
+  }
 
   _onSortLinkClick(evt) {
     evt.preventDefault();
