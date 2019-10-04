@@ -128,7 +128,8 @@ export class BoardController extends AbstractComponent {
   }
 
   _onSearch() {
-    const searchController = new SearchController(this._container, this._search, this._cards, this._taskList, this._buttonMore, this._sort, this._board);
+  //  eslint-disable-next-line
+  const searchController = new SearchController(this._container, this._search, this._cards, this._taskList, this._buttonMore, this._sort, this._board);
   }
 
   _onSortLinkClick(evt) {
@@ -184,7 +185,5 @@ export class BoardController extends AbstractComponent {
       render(this._board.getElement(), this._noElement.getElement(), Position.AFTERBEGIN);
     }
   }
-
-
 }
 
